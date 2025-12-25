@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Web Đen</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+        overflow: hidden;
+    }
+
+    #overlay {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+        background: black;
+        z-index: 10;
+    }
+
+    video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div id="overlay">
+    Ban co chac muon xem video dang so nay khong? Neu co hay nhan vo man hinh
+</div>
+
+<video id="video" preload="auto">
+    <source src="Troll.mp4" type="video/mp4">
+</video>
+
+<script>
+const overlay = document.getElementById("overlay");
+const video = document.getElementById("video");
+
+overlay.addEventListener("click", async () => {
+    overlay.style.display = "none";
+    video.style.display = "block";
+
+    video.volume = 1.0;     // MAX volume
+    video.muted = false;
+
+    try {
+        await video.play();
+    } catch (e) {
+        console.log("Autoplay bị chặn:", e);
+    }
+
+    // Fullscreen (nếu được phép)
+    if (video.requestFullscreen) {
+        video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) {
+        video.webkitRequestFullscreen();
+    }
+});
+</script>
+
+</body>
+</html>
